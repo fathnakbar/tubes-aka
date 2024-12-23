@@ -45,11 +45,18 @@ func main() {
         {"Medan", 1400},
     }
 
-    // Pengurutan
-    sortedData := quickSortRecursive(data)
+        // Mengukur waktu eksekusi
+        startTime := time.Now()
 
-    // Output hasil
-    for _, region := range sortedData {
-        fmt.Printf("Region: %s, Demand: %d\n", region.Region, region.Demand)
-    }
+        // Pengurutan
+        sortedData := quickSortRecursive(data)
+    
+        duration := time.Since(startTime)
+    
+        // Output hasil
+        for _, region := range sortedData {
+            fmt.Printf("Region: %s, Demand: %d\n", region.Region, region.Demand)
+        }
+    
+        fmt.Printf("Execution Time: %s\n", duration)
 }
