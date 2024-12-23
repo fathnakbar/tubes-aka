@@ -34,13 +34,15 @@ Permintaan bahan bakar berbeda-beda di setiap wilayah di Indonesia akibat popula
    ```
 2. Bangun aplikasi:
    ```bash
-   go build main.go
+   go build iterative.go
+   go build recursive.go
    ```
 
 ## Penggunaan
 Jalankan aplikasi untuk melihat data permintaan yang telah diurutkan:
 ```bash
-./main
+./iterative
+./recursive
 ```
 
 ### Input Data
