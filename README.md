@@ -30,7 +30,7 @@ Permintaan bahan bakar berbeda-beda di setiap wilayah di Indonesia akibat popula
 1. Clone repository:
    ```bash
    git clone https://github.com/your-username/quick-sort-bbm.git
-   cd quick-sort-bbm
+   cd tubes-aka
    ```
 2. Bangun aplikasi:
    ```bash
