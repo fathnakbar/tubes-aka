@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "time"
+)
 
 // Struktur untuk menyimpan data daerah
 type RegionDemand struct {
@@ -38,7 +41,7 @@ func quickSortRecursive(data []RegionDemand) []RegionDemand {
 func main() {
     // Data simulasi
     data := []RegionDemand{
-        {"Jakarta", 1500},g
+        {"Jakarta", 1500},
         {"Bandung", 1200},
         {"Surabaya", 1800},
         {"Yogyakarta", 800},

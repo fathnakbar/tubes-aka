@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "time"
+)
 
 // Struktur untuk menyimpan data daerah
 type RegionDemand struct {
@@ -52,18 +55,18 @@ func main() {
         {"Medan", 1400},
     }
 
-        // Mengukur waktu eksekusi
-        startTime := time.Now()
+    // Mengukur waktu eksekusi
+    startTime := time.Now()
 
-        // Pengurutan
-        sortedData := quickSortIterative(data)
-    
-        duration := time.Since(startTime)
-    
-        // Output hasil
-        for _, region := range sortedData {
-            fmt.Printf("Region: %s, Demand: %d\n", region.Region, region.Demand)
-        }
-    
-        fmt.Printf("Execution Time: %s\n", duration)
+    // Pengurutan
+    sortedData := quickSortIterative(data)
+
+    duration := time.Since(startTime)
+
+    // Output hasil
+    for _, region := range sortedData {
+        fmt.Printf("Region: %s, Demand: %d\n", region.Region, region.Demand)
+    }
+
+    fmt.Printf("Execution Time: %s\n", duration)
 }
