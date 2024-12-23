@@ -2,6 +2,10 @@
 
 Proyek ini menunjukkan implementasi algoritma Quick Sort menggunakan **Go** untuk mengurutkan data simulasi permintaan bahan bakar (BBM) di berbagai wilayah di Indonesia. Pengurutan ini bertujuan untuk mengidentifikasi wilayah dengan permintaan tertinggi hingga terendah guna mengoptimalkan perencanaan distribusi.
 
+Nama Anggota:
+- Sayyidusy Syauqi AL Ghiffari - 103012480033
+- Muhammad Fathan Akbar - 103012480042
+
 ## Fitur
 - **Quick Sort Rekursif**: Implementasi sederhana dan mudah dipahami.
 - **Quick Sort Iteratif**: Manajemen memori yang efisien menggunakan stack manual.
@@ -87,7 +91,3 @@ Hasil untuk input yang sama tetap konsisten dengan pendekatan rekursif.
 
 ## Lisensi
 Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file LICENSE untuk detail.
-
----
-
-Jangan ragu untuk berkontribusi dengan melaporkan masalah atau memberikan saran peningkatan!
