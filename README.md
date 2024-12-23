@@ -79,6 +79,7 @@ Region: Bandung, Demand: 1200
 Region: Medan, Demand: 1400
 Region: Jakarta, Demand: 1500
 Region: Surabaya, Demand: 1800
+Execution Time: [time in nanoseconds, e.g., 50µs]
 ```
 
 ### Output Quick Sort Iteratif
