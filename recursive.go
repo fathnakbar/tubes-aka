@@ -61,5 +61,5 @@ func main() {
             fmt.Printf("Region: %s, Demand: %d\n", region.Region, region.Demand)
         }
     
-        fmt.Printf("Execution Time: %s\n", duration. Nanoseconds())
+        fmt.Printf("Execution Time: %s\n", duration.Nanoseconds())
 }
