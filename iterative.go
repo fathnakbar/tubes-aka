@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "runtime"
     "time"
 )
 
@@ -43,6 +44,30 @@ func quickSortIterative(data []RegionDemand) []RegionDemand {
     }
 
     return data
+}
+
+func printMemoryUsage() {
+    var m runtime.MemStats
+    runtime.ReadMemStats(&m)
+    fmt.Printf("Memory Usage: %v KB\n", m.Alloc/1024)
+}
+
+func measurePerformance(data []RegionDemand) {
+    // Mengukur waktu eksekusi
+    startTime := time.Now()
+
+    printMemoryUsage() // Cetak penggunaan memori sebelum pengurutan
+
+    // Pengurutan
+    quickSortIterative(data)
+
+    duration := time.Since(startTime)
+
+    printMemoryUsage() // Cetak penggunaan memori setelah pengurutan
+
+    // Output hasil
+    fmt.Printf("Data length: %d\n", len(data))
+    fmt.Printf("Execution Time: %s\n", duration)
 }
 
 func main() {
@@ -101,26 +126,24 @@ func main() {
         {"Karawang Timur", 1250},
         {"Cilegon Kota", 950},
         {"Cilegon Merak", 1000},
-    }    
+    }
 
-    numIterations := 12 // Number of times to duplicate the array
-	for i := 0; i < numIterations; i++ {
-		data = append(data, data...) // Append all current elements to the array
-	}
+    inputSizes := []int{1000, 10000, 50000, 100000} // Variasi ukuran input
 
-    // Mengukur waktu eksekusi
-    startTime := time.Now()
+    for _, targetLength := range inputSizes {
+        fmt.Printf("\nTarget Length: %d\n", targetLength)
 
-    // Pengurutan
-    // sortedData := quickSortIterative(data)
-    quickSortIterative(data)
+        // Membuat data baru sesuai target length
+        initialData := data
+        for len(initialData) < targetLength {
+            remaining := targetLength - len(initialData)
+            if remaining >= len(data) {
+                initialData = append(initialData, data...)
+            } else {
+                initialData = append(initialData, data[:remaining]...)
+            }
+        }
 
-    duration := time.Since(startTime)
-    // Output hasil
-    // for _, region := range sortedData {
-    //     fmt.Printf("Region: %s, Demand: %d\n", region.Region, region.Demand)
-    // }
-
-    fmt.Printf("Data length: %d\n", len(data))
-    fmt.Printf("Execution Time: %s\n", duration)
+        measurePerformance(initialData)
+    }
 }
