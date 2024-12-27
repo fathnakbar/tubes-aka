@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "runtime"
+    "sync"
     "time"
 )
 
@@ -12,22 +13,38 @@ type RegionDemand struct {
     Demand int
 }
 
-// Quick Sort Iteratif
+// Quick Sort Iteratif dengan Optimasi
 func quickSortIterative(data []RegionDemand) []RegionDemand {
-    stack := []struct {
+    type rangeStack struct {
         start, end int
-    }{{0, len(data) - 1}}
+    }
+
+    stack := []rangeStack{{0, len(data) - 1}}
 
     for len(stack) > 0 {
-        n := len(stack) - 1
-        start, end := stack[n].start, stack[n].end
-        stack = stack[:n]
+        currentRange := stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
 
+        start, end := currentRange.start, currentRange.end
         if start >= end {
             continue
         }
 
-        pivot := data[end].Demand
+        // Median-of-three pivot selection
+        mid := start + (end-start)/2
+        if data[start].Demand > data[mid].Demand {
+            data[start], data[mid] = data[mid], data[start]
+        }
+        if data[mid].Demand > data[end].Demand {
+            data[mid], data[end] = data[end], data[mid]
+        }
+        if data[start].Demand > data[mid].Demand {
+            data[start], data[mid] = data[mid], data[start]
+        }
+        pivot := data[mid].Demand
+
+        // Partition the array
+        data[mid], data[end] = data[end], data[mid]
         low := start
 
         for i := start; i < end; i++ {
@@ -39,8 +56,14 @@ func quickSortIterative(data []RegionDemand) []RegionDemand {
 
         data[low], data[end] = data[end], data[low]
 
-        stack = append(stack, struct{ start, end int }{start, low - 1})
-        stack = append(stack, struct{ start, end int }{low + 1, end})
+        // Push smaller range first to minimize stack depth
+        if low-1-start > end-low-1 {
+            stack = append(stack, rangeStack{start, low - 1})
+            stack = append(stack, rangeStack{low + 1, end})
+        } else {
+            stack = append(stack, rangeStack{low + 1, end})
+            stack = append(stack, rangeStack{start, low - 1})
+        }
     }
 
     return data
@@ -52,26 +75,23 @@ func printMemoryUsage() {
     fmt.Printf("Memory Usage: %v KB\n", m.Alloc/1024)
 }
 
-func measurePerformance(data []RegionDemand) {
-    // Mengukur waktu eksekusi
+func measurePerformance(data []RegionDemand, wg *sync.WaitGroup) {
+    defer wg.Done()
     startTime := time.Now()
 
     printMemoryUsage() // Cetak penggunaan memori sebelum pengurutan
 
-    // Pengurutan
     quickSortIterative(data)
 
     duration := time.Since(startTime)
 
     printMemoryUsage() // Cetak penggunaan memori setelah pengurutan
 
-    // Output hasil
     fmt.Printf("Data length: %d\n", len(data))
-    fmt.Printf("Execution Time: %s\n", duration)
+    fmt.Printf("Execution Time: %s\n\n", duration)
 }
 
 func main() {
-    // Data simulasi
     data := []RegionDemand{
         {"Jakarta Pusat", 1500},
         {"Jakarta Selatan", 1400},
@@ -128,12 +148,12 @@ func main() {
         {"Cilegon Merak", 1000},
     }
 
-    inputSizes := []int{1000, 10000, 50000, 100000} // Variasi ukuran input
+    inputSizes := []int{1000, 10000, 50000, 100000}
+    var wg sync.WaitGroup
 
     for _, targetLength := range inputSizes {
         fmt.Printf("\nTarget Length: %d\n", targetLength)
 
-        // Membuat data baru sesuai target length
         initialData := data
         for len(initialData) < targetLength {
             remaining := targetLength - len(initialData)
@@ -144,6 +164,9 @@ func main() {
             }
         }
 
-        measurePerformance(initialData)
+        wg.Add(1)
+        go measurePerformance(initialData, &wg)
     }
+
+    wg.Wait()
 }

@@ -121,7 +121,7 @@ func main() {
         {"Cilegon Merak", 1000},
     }
 
-    inputSizes := []int{1000, 10000, 50000, 100000} // Variasi ukuran input
+    inputSizes := []int{1000, 10000, 50000, 100000, 1000000} // Variasi ukuran input
 
     for _, targetLength := range inputSizes {
         fmt.Printf("\nTarget Length: %d\n", targetLength)
