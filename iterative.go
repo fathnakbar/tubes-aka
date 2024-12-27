@@ -165,7 +165,7 @@ func main() {
         }
 
         wg.Add(1)
-        go measurePerformance(initialData, &wg)
+        measurePerformance(initialData, &wg)
     }
 
     wg.Wait()
